@@ -1,0 +1,26 @@
+version: "3.8"
+services:
+  db:
+    container_name: postgres
+    image: postgres:12.2-alpine
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mojo_db
+
+  mojo:
+    container_name: mojo
+    build :
+      context: .
+      dockerfile: Dockerfile
+      no_cache: true
+    ports:
+      - 8888:8888
+
+    volumes:
+      - .:/mojo
+    tty: true
+    
+    working_dir: /mojo
